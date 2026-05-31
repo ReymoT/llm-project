@@ -1,0 +1,29 @@
+services:
+  vllm:
+    image: vllm/vllm-openai:latest
+    container_name: openserve-vllm
+    runtime: nvidia
+    ipc: host
+    ports:
+      - "8001:8000"
+    volumes:
+      - ~/.cache/huggingface:/root/.cache/huggingface
+    command:
+      - --model
+      - Qwen/Qwen3-0.6B
+      - --api-key
+      - vllm-local-key
+
+  gateway:
+    build:
+      context: ./gateway
+    container_name: openserve-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - GATEWAY_API_KEY = openserve-key
+      - VLLM_BASE_URL = http://vllm:8000
+      - VLLM_API_KEY = vllm-local-key
+      - REQUEST_TIMEOUT_SECONDS = 60
+    depends_on:
+      - vllm
