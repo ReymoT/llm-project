@@ -4,12 +4,22 @@ from fastapi.responses import StreamingResponse
 from app.config import settings
 
 class VLLMBackend:
+    name = "vllm"
+
     def __init__(self):
         self.base_url = settings.vllm_base_url.rstrip("/")
         self.headers = {
             "Authorization": f"Bearer {settings.vllm_api_key}",
             "Content-Type": "application/json"
         }
+
+    async def health(self) -> bool:
+        try:
+            async with httpx.AsyncClient(timeout = 5) as client:
+                response = await client.get(f"{self.base_url}/health")
+            return response.status_code == 200
+        except httpx.HTTPError:
+            return False
 
     async def chat_completions(self, payload: dict):
         url = f"{self.base_url}/v1/chat/completions"
