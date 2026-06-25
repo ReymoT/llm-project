@@ -5,3 +5,4 @@ pydantic
 pydantic-settings
 prometheus-client
 slowapi
+pytest-asyncio
