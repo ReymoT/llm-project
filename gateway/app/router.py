@@ -1,11 +1,10 @@
 from fastapi import HTTPException, status
 from app.backends.vllm import vllm_backend
 
+
 class BackendRouter:
     def __init__(self):
-        self.backends = {
-            "vllm": vllm_backend
-        }
+        self.backends = {"vllm": vllm_backend}
 
     async def backend_status(self) -> dict[str, bool]:
         status_map = {}
@@ -20,8 +19,8 @@ class BackendRouter:
             return vllm_backend
 
         raise HTTPException(
-            status_code = status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail = "No healthy inference backend available"
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="No healthy inference backend available",
         )
 
 
