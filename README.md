@@ -1,6 +1,6 @@
 # OpenServe: Kubernetes-Native LLM Inference Platform
 
-![CI](https://github.com/ReymoT/openserve/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/ReymoT/llm-project/actions/workflows/ci.yml/badge.svg)
 
 Production-grade LLM inference platform that serves open-source language models through multiple inference backends behind a unified OpenAI-compatible API.
 
